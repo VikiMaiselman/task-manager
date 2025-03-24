@@ -7,6 +7,7 @@ const PORT = 3000;
 const app = express();
 config();
 
+// middlewares
 app.use(express.json());
 
 app.use("/api/tasks", router);
