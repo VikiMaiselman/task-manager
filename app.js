@@ -8,9 +8,11 @@ const app = express();
 config();
 
 // middlewares
+app.use(express.static("./public"));
 app.use(express.json());
 
-app.use("/api/tasks", router);
+//routes
+app.use("/api/v1/tasks", router);
 
 const startApp = async () => {
   try {
