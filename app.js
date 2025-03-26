@@ -5,7 +5,7 @@ import { connectToDb } from "./db/connect.js";
 import { errorHandler } from "./middlewares/errorHandler.js";
 import { notFoundHandler } from "./middlewares/notFoundHandler.js";
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 const app = express();
 config();
 
