@@ -5,9 +5,11 @@ const TaskSchema = new Schema({
   name: {
     type: String,
     required: true,
+    maxlength: 20,
   },
   isCompleted: {
     type: Boolean,
+    default: false,
   },
 });
 

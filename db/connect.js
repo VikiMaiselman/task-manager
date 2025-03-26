@@ -5,7 +5,5 @@ export const connectToDb = async (connectionURI) => {
     mongoose.connect(connectionURI);
   } catch (err) {
     throw err;
-  } finally {
-    mongoose.connection.close();
   }
 };

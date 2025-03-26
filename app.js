@@ -20,6 +20,7 @@ const startApp = async () => {
     });
   } catch (error) {
     console.error(error);
+    mongoose.connection.close();
   }
 };
 startApp();
