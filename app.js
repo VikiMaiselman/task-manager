@@ -2,6 +2,8 @@ import express from "express";
 import { config } from "dotenv";
 import { router } from "./routers/tasks.js";
 import { connectToDb } from "./db/connect.js";
+import { errorHandler } from "./middlewares/errorHandler.js";
+import { notFoundHandler } from "./middlewares/notFoundHandler.js";
 
 const PORT = 3000;
 const app = express();
@@ -13,6 +15,10 @@ app.use(express.json());
 
 //routes
 app.use("/api/v1/tasks", router);
+
+// more middlewares
+app.use(errorHandler);
+app.use(notFoundHandler);
 
 const startApp = async () => {
   try {
