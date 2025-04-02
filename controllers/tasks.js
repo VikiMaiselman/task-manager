@@ -32,10 +32,11 @@ export const createTask = asyncWrapper(async (req, res) => {
   return res.status(201).json({ newTask });
 });
 
-export const updateTask = asyncWrapper(async (req, res) => {
+export const updateTask = asyncWrapper(async (req, res, next) => {
   const { id: taskId } = req.params;
   const { name, isCompleted } = req.body;
-  if (!isValid(taskId)) return next(createCustomError(`Invalid id ${taskId}`, 404));
+  // if (!isValid(taskId)) next(createCustomError(`Invalid id ${taskId}`, 404));
+  if (!isValid(taskId)) throw new Error(`Invalid id ${taskId}`, 404);
 
   const task = await Task.findByIdAndUpdate(
     taskId,
@@ -44,18 +45,18 @@ export const updateTask = asyncWrapper(async (req, res) => {
       new: true, //returns already updated task
       runValidators: true,
     }
-  );
+  ).exec();
   if (!task) return next(createCustomError(`No task with id ${taskId}`, 404));
 
   return res.status(200).json({ task });
 });
 
-export const deleteTask = asyncWrapper(async (req, res) => {
+export const deleteTask = asyncWrapper(async (req, res, next) => {
   const { id: taskId } = req.params;
-  if (!isValid(taskId)) return next(createCustomError(`Invalid id ${taskId}`, 404));
+  if (!isValid(taskId)) next(createCustomError(`Invalid id ${taskId}`, 404));
 
-  const task = await Task.findByIdAndDelete(taskId);
-  if (!task) return next(createCustomError(`No task with id ${taskId}`, 404));
+  const task = await Task.findByIdAndDelete(taskId).exec();
+  if (!task) next(createCustomError(`No task with id ${taskId}`, 404));
 
   return res.status(200).json({ task });
 });
